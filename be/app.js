@@ -4,23 +4,41 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
+const cors = require('cors')
+const mongoose = require('mongoose')
+// const User = require('./models/users')
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+ mongoose.connect('mongodb://localhost:27017/nemv', { useNewUrlParser: true }, (err) => {
+    if (err) return console.error(err)
+    console.log('mongoose connected!')
 
+    // User.create({ name: '김다래' })
+    //  .then(r => console.log(r))
+    //  .catch(e => console.error(e))
+    //
+    // // User.find()
+    //   .then(r => console.log(r))
+    //   .catch(e => console.error(e))
+
+ //     User.updateOne({ index: name_1 }, { $set:{index:111}})
+ //      .then(r => {
+ //        console.log(r)
+ //        console.log('updated')
+ //          return User.find()
+ //        })
+ //      .then(r => console.log(r))
+ //      .catch(e => console.log(e))
+
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors()) // api 위에서 사용하겠다고 선언
+app.use('/api', require('./routes/api'))
 app.use(express.static(path.join(__dirname, '../', 'fe', 'dist')));
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,7 +53,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send({ msg: err.message})
 });
 
 module.exports = app;
