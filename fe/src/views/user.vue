@@ -171,7 +171,7 @@ export default {
   },
   methods: {
     getReq () {
-      axios.get('http://localhost:3000/api/user', {
+      axios.get('/api/user', {
         user: 'getMan'
       })
         .then((r) => {
@@ -182,7 +182,7 @@ export default {
         })
     },
     postReq () {
-      axios.post('http://localhost:3000/api/user', {
+      axios.post('/api/user', {
         name: '가나정', age:'444'
       })
         .then((r) => {
@@ -193,7 +193,7 @@ export default {
         })
     },
     putReq () {
-      axios.put('http://localhost:3000/api/user', {
+      axios.put('/api/user', {
         user: 'putMan'
       })
         .then((r) => {
@@ -204,7 +204,7 @@ export default {
         })
     },
     delReq () {
-      axios.delete('http://localhost:3000/api/user')
+      axios.delete('/api/user')
         .then((r) => {
           this.delMd = JSON.stringify(r.data)
         })
@@ -218,7 +218,7 @@ export default {
     postUser () {
       // console.log(this.userName, this.userAge)
       this.dialog = false
-      axios.post('http://localhost:3000/api/user', {
+      axios.post('/api/user', {
         name: this.userName, age: this.userAge
       })
         .then((r) => {
