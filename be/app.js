@@ -36,9 +36,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors()) // api 위에서 사용하겠다고 선언
-app.use('/api', require('./routes/api'))
+if (process.env.NODE_ENV !== 'production') app.use(cors())
+//app.use(cors()) // api 위에서 사용하겠다고 선언
 app.use(express.static(path.join(__dirname, '../', 'fe', 'dist')));
+app.use('/api', require('./routes/api'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
